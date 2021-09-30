@@ -1,0 +1,96 @@
+
+    <select class="p-dropdown " #langauge (change)="translateSite(langauge.value)">
+      <option *ngFor="let localization of translateService.getLangs()" [value]="localization"
+        [selected]="localization === localization.currentLang">
+        {{ localization }}
+      </option>
+    </select>
+
+
+<p-table #dt [value]="addressList"  [(selection)]="selectedList" sortMode="multiple">
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width: 3rem">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th pSortableColumn="id">{{'ID' | translate}}<p-sortIcon field="id"></p-sortIcon></th>
+            <th pSortableColumn="name">{{'Name' | translate}}<p-sortIcon field="name"></p-sortIcon></th>
+            <th pSortableColumn="location">{{'Location' | translate}}<p-sortIcon field="location"></p-sortIcon></th>
+            <th pSortableColumn="phone">{{'Phone' | translate}}<p-sortIcon field="phone"></p-sortIcon></th>
+            <th pSortableColumn="createdDate">{{'CreatedDate' | translate}}<p-sortIcon field="createdDate"></p-sortIcon></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-addressList>
+        <tr>
+            <td>
+                <p-tableCheckbox [value]="addressList"></p-tableCheckbox>
+            </td>
+            <td pEditableColumn>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="addressList.id">
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{addressList.id}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td pEditableColumn>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="addressList.name">
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{addressList.name}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td pEditableColumn>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="addressList.location">
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{addressList.location}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td pEditableColumn>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="addressList.phone">
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{addressList.phone}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td pEditableColumn>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="addressList.createdDate">
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{addressList.createdDate}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<br/>
+<div>
+<span>
+    <button pButton type="button"icon="pi pi-trash" class="ui-button-info p-mr-3" [label]="'Delete'" (click)="deleteSelectedList()" [disabled]="!selectedList || !selectedList.length"></button> 
+</span>
+<span>
+    <button pButton type="button"icon="pi pi-pencil" class="ui-button-info p-mr-3" [label]="'Update'" (click)="updateList()" [disabled]="!selectedList || !selectedList.length"></button>
+</span>
+<span>
+    <button pButton type="button"icon="pi pi-user-plus" class="ui-button-info p-mr-3" [label]="'Add'"
+    pAddRow [table]="dt" [newRow]="newRow()"></button>
+</span>
+</div>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
